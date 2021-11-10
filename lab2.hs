@@ -13,7 +13,15 @@
 -- floor 3.7         zaokrouhleni dolu
 -- ceiling 3.3       zaokrouhleni nahoru
 -- mod 10 3          zbytek po celociselnem deleni
--- odd 3             vraci True pokud je cislo liche, pokud sude vraci False
+-- odd 3             vraci True pokud je cislo liche, pokud je sude vraci False
+-- even 4            vraci True pokud je cislo sude, pokud je liche vraci False
+
+
+-- Zakladni typy trid:
+-- Class - Eq - == /=
+-- Class - Ord - > < >= <= compare
+-- Class - Show - show :: a -> String
+-- Class - Read - read :: (Read a) => String -> a
 
 
 -- FAKTORIAL
