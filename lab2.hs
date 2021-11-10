@@ -16,13 +16,46 @@
 -- odd 3             vraci True pokud je cislo liche, pokud je sude vraci False
 -- even 4            vraci True pokud je cislo sude, pokud je liche vraci False
 
+-- Pomocne funkce nad seznama. Skoro vsecky jsme tady naprogramovali.
+
+-- head [5,4,3,2,1] -- 5
+-- tail [5,4,3,2,1] -- [4,3,2,1]
+-- last [5,4,3,2,1] -- 1
+-- init [5,4,3,2,1] -- [5,4,3,2]
+-- [1,2,3] !! 2 -- 3
+-- length [5,4,3,2,1] -- 5
+-- null [1,2,3] -- False
+-- null [] -- True
+-- [1,2,3] ++ [4,5] -- [1,2,3,4,5]
+-- concat [[1,2],[3],[4,5]] -- [1,2,3,4,5]
+-- zip [1,2] [3,4,5] -- [(1,3),(2,4)]
+-- zipWith (+) [1,2] [3,4] -- [4,6]
+
+-- minimum [8,4,2,1,5,6] -- 1
+-- maximum [1,9,2,3,4] -- 9
+-- sum [5,2,1,6,3,2,5,7] -- 31
+-- product [6,2,1,2] -- 24
+
+-- take 3 [5,4,3,2,1] -- [5,4,3]
+-- drop 3 [8,4,2,1,5,6] -- [1,5,6]
+-- takeWhile (> 0) [1,3,0,4] -- [1,3]
+-- dropWhile (> 0) [1,3,0,4] -- [0,4]
+-- filter (> 0) [1,3,0,2,-1] -- [1,3,2]
+
+-- reverse [5,4,3,2,1] -- [1,2,3,4,5]
+-- map (*2) [1,2,3] -- [2,4,6]
+
+-- 4 `elem` [3,4,5,6] -- True
+-- replicate 3 10 -- [10,10,10]
+
+-- take 10 (cycle [1,2,3]) -- [1,2,3,1,2,3,1,2,3,1]
+-- take 10 (repeat 5) -- [5,5,5,5,5,5,5,5,5,5]
 
 -- Zakladni typy trid:
 -- Class - Eq - == /=
 -- Class - Ord - > < >= <= compare
 -- Class - Show - show :: a -> String
 -- Class - Read - read :: (Read a) => String -> a
-
 
 -- FAKTORIAL
 -- prvni moznost
