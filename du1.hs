@@ -27,7 +27,8 @@ solution1 = ["DAD  SEND",
 -- answers :: Result -> ([String],[String])
 
 -- *Main> answers solution1 
--- (["DAD","SEND","EAST","ITSY","NERF","ARK","SYNC","MESH","EVER","NEAR"],["DOWN","MAN","EASE","DEAR","FATHER","STINKS","YARD","STUN","DAY","CARD"])
+-- (["DAD","SEND","EAST","ITSY","NERF","ARK","SYNC","MESH","EVER","NEAR"],
+-- ["DOWN","MAN","EASE","DEAR","FATHER","STINKS","YARD","STUN","DAY","CARD"])
 
 
 answers :: Result -> ([String],[String])
@@ -52,7 +53,8 @@ answers solution = let
     removeItem _ [] = []
     removeItem x (y:ys) | x == y = removeItem x ys
                         | otherwise = y : removeItem x ys
-    in (removeItem "" (separeX (concat (joinS' solution))), removeItem "" (separeX (concat (joinS' (rotate solution)))))
+    in (removeItem "" (separeX (concat (joinS' solution))), 
+    removeItem "" (separeX (concat (joinS' (rotate solution)))))
 
 
 
@@ -86,4 +88,5 @@ removeItem x (y:ys) | x == y = removeItem x ys
 joinTwoL :: Result -> Result -> (Result, Result)
 joinTwoL x y = (x , y)
 
--- Ukazkovy vstup joinTwoL (removeItem "" (separeX (concat (joinS' solution1)))) (removeItem "" (separeX (concat (joinS' (rotate solution1)))))
+-- Ukazkovy vstup joinTwoL (removeItem "" (separeX (concat (joinS' solution1))))
+--  (removeItem "" (separeX (concat (joinS' (rotate solution1)))))
