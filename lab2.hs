@@ -16,7 +16,6 @@
 -- odd 3             vraci True pokud je cislo liche, pokud je sude vraci False
 -- even 4            vraci True pokud je cislo sude, pokud je liche vraci False
 
--- Pomocne funkce nad seznama. Skoro vsecky jsme tady naprogramovali.
 
 -- head [5,4,3,2,1] -- 5
 -- tail [5,4,3,2,1] -- [4,3,2,1]

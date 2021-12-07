@@ -57,6 +57,31 @@ answers solution = let
     removeItem "" (separeX (concat (joinS' (rotate solution)))))
 
 
+-- Doplnkova uloha
+answers1 :: Result -> Int
+answers1 solution = let
+    -- Funkce pro zanechani itemu v seznamu, ktere jsou delsi nez 2 znaky.
+
+    joinS' :: Result -> [Result]
+    joinS' x = [ words y | y <- x]
+
+    vowels []  = 0
+    vowels (x : xs) = if x == ' ' then 1 + vowels xs else vowels xs
+    in vowels (concat solution)
+
+searchChar :: Char
+searchChar = 'A'
+-- Doplnkova uloha
+countChars :: Result -> Char-> Int
+countChars [] s = 0
+countChars(x:xs) s = count x where
+        count [] = countChars xs s
+        count (y:ys) = if y == s then 1 + count ys else count ys
+
+-- Spocitej delku listu.
+length' :: [a] -> Int
+length' [] = 0
+length'(_:xs) = 1 + length' xs
 
 -- POMOCNE PRIKLADY ////////////////////////////////////////////////////////////
 
