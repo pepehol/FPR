@@ -1,4 +1,4 @@
--- 4 - Poker
+-- 4 - Poker, zadani DU.2
 
 -- Lets define a data types representing a deck of Poker cards. In Poker, a 
 -- player gets 5 cards into the hand. Dealt hands are classified into several
@@ -18,20 +18,7 @@
 -- Prelude> decide [Card (Numeric 2) Hearts,Card (Numeric 5) Clubs,Card Ace Hearts,Card King Clubs,Card Jack Spades]
 -- HighCard
 
-data Suit = Hearts | Clubs | Diamonds | Spades deriving (Eq, Show)
-data Rank = Numeric Int | Jack | Queen | King | Ace deriving (Eq, Show, Ord)
-data Card = Card Rank Suit deriving (Eq, Show)
-type Hand = [Card]
-data Category = RoyalFlush
-              | StraightFlush
-              | Four
-              | FullHouse
-              | Flush
-              | Straight
-              | Three
-              | TwoPair
-              | Pair
-              | HighCard deriving (Eq, Show)
+-- Testovaci data pro funkci "decide"
 
 -- TwoPair
 test1 :: [Card]
@@ -53,13 +40,34 @@ test4 = [Card (Numeric 2) Hearts,Card (Numeric 5) Clubs,Card Ace Hearts,Card Kin
 test5 :: [Card]
 test5 = [Card (Numeric 2) Hearts,Card (Numeric 5) Hearts,Card Ace Hearts,Card King Hearts,Card Jack Hearts]
 
--- 
+-- Flush
 test6 :: [Card]
 test6 = [Card (Numeric 2) Hearts,Card (Numeric 5) Hearts,Card (Numeric 3) Hearts,Card (Numeric 10) Hearts,Card (Numeric 7) Hearts]
 
--- Royal Flush
+-- RoyalFlush
 test7 :: [Card]
 test7 = [Card Ace Hearts,Card King Hearts,Card Queen Hearts,Card (Numeric 10) Hearts,Card Jack Hearts]
+
+-- Four
+test8 :: [Card]
+test8 = [Card Ace Hearts,Card Ace Hearts,Card Ace Hearts,Card (Numeric 10) Hearts,Card Ace Hearts]
+
+-- /////////////////////////////////////////////////////////////////////////////
+
+data Suit = Hearts | Clubs | Diamonds | Spades deriving (Eq, Show)
+data Rank = Numeric Int | Jack | Queen | King | Ace deriving (Eq, Show, Ord)
+data Card = Card Rank Suit deriving (Eq, Show)
+type Hand = [Card]
+data Category = RoyalFlush
+              | StraightFlush
+              | Four
+              | FullHouse
+              | Flush
+              | Straight
+              | Three
+              | TwoPair
+              | Pair
+              | HighCard deriving (Eq, Show)
 
 -- Ziskej hodnotu karet.
 getRanks :: Hand -> [Rank]
@@ -71,7 +79,7 @@ getSuits :: Hand -> [Suit]
 getSuits [] = []
 getSuits ((Card _ x) : xs) = x : getSuits xs
 
--- Spocti pocet vyskytu stejne karty.
+-- Dej mi pocet vyskytu stejnych karet.
 countRanks :: [Rank] -> [(Rank, Int)]
 countRanks xs = let u = unique xs
                in [(x, length (filter( == x) xs)) | x <- u] where
@@ -79,16 +87,16 @@ countRanks xs = let u = unique xs
                     unique [] = []
                     unique (x : xs) = x : unique (filter (/=x) xs)
 
--- Setrizeni podle hodnoty.
+-- Setrizeni karet v ruce.
 sortByRank :: [Rank] -> [Rank]
 sortByRank [] = []
 sortByRank (x:xs) = let lp = filter (< x) xs
                         rp = filter (>= x) xs
                     in sortByRank lp ++ [x] ++ sortByRank rp
 
--- Vyskytuje se v ruce konkretni pocet?
-     -- 1 - samostatna karta
-     -- 2 - par atd.
+-- Vyskytuje se v ruce konkretni pocet stejne karty?
+     -- n = 1 - samostatna karta
+     -- n = 2 - par atd.
 isConcreteRank :: Int -> [(Rank, Int)] -> Int
 isConcreteRank _ [] =  0
 isConcreteRank n ((_, x) : xs) = if n == x then 1 + isConcreteRank n xs else isConcreteRank n xs
@@ -104,7 +112,7 @@ isSameSuit [] = True
 isSameSuit [x] = True
 isSameSuit (x:x1:xs) = x == x1 && isSameSuit (x1:xs)
 
--- Vygeneruj mi postupku
+-- Vygeneruj mi postupku.
 generateStraight :: Rank -> [Rank]
 generateStraight (Numeric x) | x == 7 = [Numeric n | n <- [x..10]] ++ [Jack]
                              | x == 8 = [Numeric n | n <- [x..10]] ++ [Jack, Queen]
@@ -113,42 +121,6 @@ generateStraight (Numeric x) | x == 7 = [Numeric n | n <- [x..10]] ++ [Jack]
                              | otherwise = [Numeric r | r <- take 5 [x..]]
 generateStraight Ace = [Numeric r | r <- take 4 [2..]] ++ [Ace]
 generateStraight _ = []
-
--- Pomoci konstrukci "if".
--- decide:: Hand -> Category
--- decide hand = if numberOfOccurrences 2 (countRanks (getRanks hand)) then
---                     if numberOfOccurrences 4 (countRanks (getRanks hand)) then
---                          Four
---                     else
---                          if numberOfOccurrences 3 (countRanks (getRanks hand)) then
---                               if numberOfOccurrences 2 (countRanks (getRanks hand)) then
---                                    FullHouse
---                               else
---                                    Three
---                          else
---                               if isConcreteRank 2 (countRanks (getRanks test1)) >= 2 then
---                                    TwoPair
---                               else
---                                    Pair
---                else
---                     if isSameSuit (getSuits hand) then
---                          if sortByRank (getRanks hand) == generateStraight rank then
---                               if rank == Numeric 10 then
---                                    RoyalFlush
---                               else
---                                    StraightFlush
---                          else
---                               Flush
---                     else
---                          if sortByRank (getRanks hand) == generateStraight rank then 
---                               Straight
---                          else
---                               HighCard
---      where
---           rank = if head (sortByRank (getRanks hand)) == Numeric 2 && last (sortByRank (getRanks hand)) == Ace then
---                Ace
---           else
---                head (sortByRank (getRanks hand))
 
 -- Pomoci konstrukci Guard expressions.
 decide:: Hand -> Category
@@ -192,3 +164,16 @@ decide hand | numberOfOccurrences 2 (countRanks (getRanks hand)) =
                     Ace
                else
                     head (sortByRank (getRanks hand))
+
+-- Doplnkova uloha
+-- countOccurences :: Hand -> Card -> Int
+-- countOccurences hand card = 
+
+card1 :: Card
+card1 = Card Ace Hearts
+test9 :: [Card]
+test9 = [Card Ace Hearts,Card Ace Hearts,Card Ace Hearts,Card (Numeric 10) Hearts,Card Ace Hearts]
+
+countOccurence :: Hand -> Card -> Int
+countOccurence [] _ = 0
+countOccurence (x:xs) card = if x == card then 1 + countOccurence xs card else countOccurence xs card 
